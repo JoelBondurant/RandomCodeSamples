@@ -1,0 +1,16 @@
+import clr, System, System.IO
+clr.AddReferenceByName('Microsoft.Office.Interop.Excel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c')
+from Microsoft.Office.Interop import Excel
+
+xlsPath = "./"
+di = System.IO.DirectoryInfo(xlsPath)
+fis = di.GetFiles("*.xls")
+
+ex = Excel.ApplicationClass()
+ex.DisplayAlerts = False
+
+for fi in fis:
+	fiName = fi.Name
+	wkbk = ex.Workbooks.Open(xlsPath + fiName)
+	wkbk.SaveAs(fiName[:-3] + "csv", Excel.XlFileFormat.xlCSV)
+	wkbk.Close(False)

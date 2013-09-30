@@ -1,0 +1,35 @@
+import clr, sys, System, System.IO
+clr.AddReference('System.Data')
+from System.Data.SqlClient import SqlConnection, SqlParameter, SqlTransaction
+connString = "Data Source=SASERVER1\SQL2008R2;Initial Catalog=NATSEMIRAW;Integrated Security=SSPI;"
+connection = SqlConnection(connString)
+connection.Open()
+cmd = connection.CreateCommand()
+
+fi = System.IO.DirectoryInfo("c:\\natsemidata\\")
+fis = fi.GetFiles("*.csv")
+
+for fi in fis:
+	fiName = fi.Name
+	cmd.CommandText = """
+	TRUNCATE TABLE ToolHistoryStaging;
+	
+	BULK INSERT ToolHistoryStaging
+	FROM 'c:\\natsemidata\\""" + fiName + """'
+	WITH (FIELDTERMINATOR = ',');
+	
+	INSERT INTO ToolHistory
+	(
+		FileName, Entity, Event, Operator, TransDate, OldE10State, NewE10State, OldAvail, NewAvail, WCCSessionKey,
+		Lot, Device, Oper, OperDesc, ProdUse, Wafers, DeferredEvent, InitiatedByEvent
+	)
+	SELECT 	'""" + fiName + """', Entity, Event, Operator, TransDate, OldE10State, NewE10State, OldAvail, NewAvail, WCCSessionKey,
+		Lot, Device, Oper, OperDesc, ProdUse, Wafers, DeferredEvent, InitiatedByEvent
+	FROM ToolHistoryStaging;
+	
+	"""
+	cmd.ExecuteNonQuery()
+
+
+
+
