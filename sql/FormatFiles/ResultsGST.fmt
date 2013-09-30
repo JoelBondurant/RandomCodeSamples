@@ -1,0 +1,7 @@
+10.0
+5
+1	SQLCHAR	0	100	"\t"		2	PROCESSBATCH_ID	SQL_Latin1_General_CP1_CI_AS
+2	SQLCHAR	0	100	"\t"		3	PRODUCT_ID	SQL_Latin1_General_CP1_CI_AS
+3	SQLCHAR	0	100	"\t"		4	STEP_ID		SQL_Latin1_General_CP1_CI_AS
+4	SQLCHAR	0	100	"\t"		5	TOOL_ID		SQL_Latin1_General_CP1_CI_AS
+5	SQLCHAR	0	100	"\n"		6	t_ProcAve	SQL_Latin1_General_CP1_CI_AS

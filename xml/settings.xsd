@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.sensoranalytics.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.sensoranalytics.com" elementFormDefault="qualified">
+	<xs:element name="Settings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Paths">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RootPath" type="xs:anyURI"/>
+							<xs:element name="FileImportPickup" type="xs:anyURI"/>
+							<xs:element name="FileImportWorking" type="xs:anyURI"/>
+							<xs:element name="FileImportArchive" type="xs:anyURI"/>
+							<xs:element name="Matlab" type="xs:anyURI"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Database">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="2"/>
+										<xs:maxLength value="30"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Server">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="2"/>
+										<xs:maxLength value="30"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Driver">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="2"/>
+										<xs:maxLength value="120"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ConnectionString">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="2"/>
+										<xs:maxLength value="120"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="User">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="2"/>
+										<xs:maxLength value="30"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Password">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="8"/>
+										<xs:maxLength value="30"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CentralControl">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CTQIntervalInHours">
+								<xs:simpleType>
+									<xs:restriction base="xs:nonNegativeInteger">
+										<xs:minInclusive value="1"/>
+										<xs:maxInclusive value="90"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="RTSIntervalInHours">
+								<xs:simpleType>
+									<xs:restriction base="xs:nonNegativeInteger">
+										<xs:minInclusive value="1"/>
+										<xs:maxInclusive value="90"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="SimulationMode" type="xs:boolean"/>
+							<xs:element name="StartupDelayInHours">
+								<xs:simpleType>
+									<xs:restriction base="xs:nonNegativeInteger">
+										<xs:minInclusive value="0"/>
+										<xs:maxInclusive value="90"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="SimulationStartDate" type="xs:dateTime"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="RTS">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FinishWafers" type="xs:boolean"/>
+							<xs:element name="WipAlgoTracking" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CTQ">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RunOptimization" type="xs:boolean"/>
+							<xs:element name="Optimizer">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="LP"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="OptimizerX0" type="xs:double"/>
+							<xs:element name="SamplingOptimizationCacheThresholdInHours" type="xs:nonNegativeInteger"/>
+							<xs:element name="f_CIThreshold" type="xs:double"/>
+							<xs:element name="MinArrivalRate" type="xs:double"/>
+							<xs:element name="MaxIterations" type="xs:nonNegativeInteger"/>
+							<xs:element name="MaxDeltaH" type="xs:double"/>
+							<xs:element name="OptimizerMaxIterations" type="xs:nonNegativeInteger"/>
+							<xs:element name="UtilizationTargetReduction" type="xs:double"/>
+							<xs:element name="QTLimit" type="xs:double"/>
+							<xs:element name="MaxSimConfIterations" type="xs:nonNegativeInteger"/>
+							<xs:element name="SimWarmup" type="xs:nonNegativeInteger"/>
+							<xs:element name="SimArrivalsPerSample" type="xs:nonNegativeInteger"/>
+							<xs:element name="SimNumSamples" type="xs:nonNegativeInteger"/>
+							<xs:element name="SimAlpha" type="xs:double"/>
+							<xs:element name="u_LPMinDiff" type="xs:double"/>
+							<xs:element name="f_URed" type="xs:double"/>
+							<xs:element name="n_LoopLimit" type="xs:nonNegativeInteger"/>
+							<xs:element name="f_SlackThr" type="xs:double"/>
+							<xs:element name="n_ExitStepLimit" type="xs:nonNegativeInteger"/>
+							<xs:element name="u_Target" type="xs:double"/>
+							<xs:element name="n_PerInHorz" type="xs:nonNegativeInteger"/>
+							<xs:element name="n_PerInHorz2" type="xs:nonNegativeInteger"/>
+							<xs:element name="n_HrsInPeriod" type="xs:nonNegativeInteger"/>
+							<xs:element name="n_ShiftsPerDay" type="xs:nonNegativeInteger"/>
+							<xs:element name="n_DaysInWIPFcst" type="xs:nonNegativeInteger"/>
+							<xs:element name="t_Fcst" type="xs:double"/>
+							<xs:element name="t_Fcst_f" type="xs:string"/>
+							<xs:element name="t_OptDTThreshold" type="xs:double"/>
+							<xs:element name="f_TargBound" type="xs:double"/>
+							<xs:element name="z_TargBound" type="xs:double"/>
+							<xs:element name="I_TargetType" type="xs:double"/>
+							<xs:element name="p_Lower_TargBound" type="xs:double"/>
+							<xs:element name="p_Upper_TargBound" type="xs:double"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

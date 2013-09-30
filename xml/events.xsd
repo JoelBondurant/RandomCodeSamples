@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Sensor Analytics, Inc. copyright 2012 all rights reserved.-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sensoranalytics.com" targetNamespace="http://www.sensoranalytics.com" elementFormDefault="qualified">
+	<xs:group name="EventGroup">
+		<!--The group of all core event types.-->
+		<xs:sequence>
+			<xs:element name="LotEvent" minOccurs="0" maxOccurs="unbounded">
+				<!--Events for lots and wafers.-->
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Type">
+							<!--The event type designation by enumeration.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="BEGIN_RUN"/>
+									<xs:enumeration value="END_RUN"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="LotId">
+							<!--The factory identifier for the lot.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="ToolId">
+							<!--Tool ID context varies, e.g. in a departure event, Tool ID refers to the tool that a lot is leaving from. In an arrival event, Tool ID refers to the tool that the lot is arriving at, etc.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="NextToolId" minOccurs="0">
+							<!--The id for the next tool.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="0"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="DateTime" type="xs:dateTime">
+							<!--The time of the lot event.-->
+						</xs:element>
+						<xs:element name="WaferEvents">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="WaferEvent" minOccurs="1" maxOccurs="63">
+										<!--A wafer event must exist for each wafer in the lot, any wafers in the lot which do not have a wafer event will be removed from the lot.-->
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="WaferId">
+													<!--A factory identifier for the wafer within the lot.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="Slot">
+													<!--The lot slot number the wafer is assigned to.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:integer">
+															<xs:minInclusive value="1"/>
+															<xs:maxInclusive value="63"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="OperationId">
+													<!--The factory identifier for the operation or step that is being started or finished.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="ToolChamberId" minOccurs="0">
+													<!--The factory tool chamber identifier for the wafer event.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="UseCode">
+													<!--ProdUse or product use, i.e. the use of the product that this lot or wafer belongs to. For production lots this would be PROD, for qual or test-wafers this would be QUAL or TW, etc. A fab can use its own designations and will work with Sensor Analytics to map these into IM terminology.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="ProductId">
+													<!--The factory product identifier for the product associated with the wafer.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="DeviceId">
+													<!--The factory device identifier for the product associated with the wafer.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="ProductFamilyId">
+													<!--The factory product family identifier for the product associated with the wafer.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="NextToolChamberId" minOccurs="0">
+													<!--The id for the next tool chamber.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="NextOperationId" minOccurs="0">
+													<!--The Id for the operation or step that follows the operation that is being reported in the prior field. Is of particular interest when the event for a lot/wafer is END_RUN since then the MES should know where this lot is going next and that is reflected in this field. In this case the prior field will show the step that is being finished. This field will help IM place lots/wafers into the WIP for the step that they will actually go to next, not a step that may be skipped due to sampling.
+This might be Null. When that is the case and the event is an END_RUN IM has to assume what is the next operation.
+-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="NextProductId" minOccurs="0">
+													<!--The product Id for the operation reported in the NextFactoryOperationId field. Must be provided if the NextFactoryOperationId is provided.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="NextDeviceId" minOccurs="0">
+													<!--The factory device identifier for the next product.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="NextProductFamilyId" minOccurs="0">
+													<!--The factory product family identifier for the next product.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="RecipeId">
+													<!--The factory id for the recipe used.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="TagIds">
+													<!--This field lists the sampling tag(s) that a lot may be carrying to ensure that it gets inspected at inspection operations that carry matching tags.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="0"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="GetsProcessed">
+													<!--1 = The wafer is being processed at the step. 0 = The wafer is not being processed at the step.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:integer">
+															<xs:minInclusive value="0"/>
+															<xs:maxInclusive value="1"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ToolEvent" minOccurs="0" maxOccurs="unbounded">
+				<!--Events for tools and tool chambers.-->
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ToolId">
+							<!--The factory tool identifier for the event.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="DateTime" type="xs:dateTime">
+							<!--The time of the event.-->
+						</xs:element>
+						<xs:element name="OldToolState">
+							<!--This tool state identifier will signify the state that the tool was in before entering NewToolState.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="NewToolState">
+							<!--This factory identifier will signify the state that the tool just entered into.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="ToolChamberEvents">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ToolChamberEvent" minOccurs="0" maxOccurs="63">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ToolChamberId">
+													<!--The factory tool chamber identifier for the event.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="OldToolChamberState">
+													<!--This tool chamber state identifier will signify the state that the tool was in before entering NewToolChamberState.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="NewToolChamberState">
+													<!--This factory identifier will signify the state that the tool chamber just entered into.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LotMeasurementEvent" minOccurs="0" maxOccurs="unbounded">
+				<!--Events for wafer measurements.-->
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Type">
+							<!--The event type designation by enumeration.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="DEFECT"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="LotId">
+							<!--The factory identifier for the lot.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="ToolId">
+							<!--The factory identifier for the tool.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="DateTime" type="xs:dateTime">
+							<!--The time of the event.-->
+						</xs:element>
+						<xs:element name="ToolUnderStudyId" minOccurs="0">
+							<!--The factory identifier for the tool under study.-->
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="2"/>
+									<xs:maxLength value="30"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="WaferMeasurementEvents">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="WaferMeasurementEvent" minOccurs="0" maxOccurs="63">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="WaferId">
+													<!--The factory identifier for the wafer.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="ToolChamberUnderStudyId" minOccurs="0">
+													<!--The factory identifier for the tool chamber under study.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="AreaInspected" type="xs:decimal">
+													<!--The area inspected, expressed as a decimal. Units specified elsewhere.-->
+												</xs:element>
+												<xs:element name="AdderOperationId" minOccurs="0">
+													<!--The factory identifier for the adder operation.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="2"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="Metric" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="MetricId">
+																<!--The Id for the metric that is being delivered to a control chart. For defects this is typically the name of the defect type or category, e.g. “TotalCount”, “TotalAdders”, or for specific defect types “MetalBridge”, “TypeA”, etc.-->
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:minLength value="2"/>
+																		<xs:maxLength value="30"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="ControlChartId">
+																<!--The Id for the control chart (CC) that will be updated with the metric value. If multiple CCs are updated with the metric value, then this should be the Id for the CC that is monitoring the process tool-chamber (or just tool if no chamber) that the wafer went through just before the measurement event. -->
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:minLength value="1"/>
+																		<xs:maxLength value="30"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="Type" minOccurs="0">
+																<!--The metric type designation by enumeration.-->
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:enumeration value="COUNT"/>
+																		<xs:enumeration value="DENSITY"/>
+																		<xs:enumeration value="FRACTION"/>
+																		<xs:enumeration value="PERCENTAGE"/>
+																		<xs:enumeration value="OTHER"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+															<xs:element name="SubArea" type="xs:decimal" minOccurs="0">
+																<!-- The total wafer area (in centimeters squared) used to establish the metric value. A SubArea is usually a smaller area than the AreaInspected on the wafer and is applicable when a fab uses area filtering to get counts within specific sub-areas on the wafer. When not provided, this is assumed to be the same as the AreaInspected for the wafer. -->
+															</xs:element>
+															<xs:element name="Value" type="xs:decimal">
+																<!-- The metric value that will appear on the control chart. When the value reported is of type “Count”, then this should be the total number of defects detected, and determined to belong to the MetricId in question, in the area scanned (&, if applicable, within SubArea given), i.e. this number should not be an extrapolation of any kind. -->
+															</xs:element>
+															<xs:element name="ReviewFraction">
+																<!-- Only for Metrics that, in order to be created, needed a defect classification on a separate review step (with a review tool). This is the fraction of defects within the wafer area inspected (& if applicable, the metric sub-area), that were reviewed to come up with the Value. -->
+																<xs:simpleType>
+																	<xs:restriction base="xs:decimal">
+																		<xs:minInclusive value="0"/>
+																		<xs:maxInclusive value="1"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ControlCharts">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ControlChart" minOccurs="0" maxOccurs="63">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ControlChartId">
+													<!--The event level identifier for matching the control chart to the wafer measurement event.-->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:minLength value="1"/>
+															<xs:maxLength value="30"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="Type">
+													<!-- The control chart type designation by enumeration. -->
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="X_BAR"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<!-- The current mean or center-line of the control chart. If chart is so new that none is available in the SPC system, then provide Null. -->
+												<xs:element name="CL" type="xs:decimal"/>
+												<!-- The current upper control limit of the control chart. If chart is so new that none is available in the SPC system, then provide Null. -->
+												<xs:element name="UCL" type="xs:decimal"/>
+												<!-- The upper control sigma value of the control chart, i.e. the standard deviation used to calculate what an upper control limit should be. If not available, or if chart is so new that none is available in the SPC system, then provide Null. -->
+												<xs:element name="UCLSigma" type="xs:decimal"/>
+												<!-- The lower upper control limit of the control chart. We can assume this to be 0 for defects. -->
+												<xs:element name="LCL" minOccurs="0" type="xs:decimal"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="Events">
+		<xs:complexType>
+			<xs:group ref="EventGroup" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
