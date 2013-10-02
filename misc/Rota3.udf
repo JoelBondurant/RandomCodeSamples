@@ -1,0 +1,11 @@
+Rota3 # Function for modeling a 3D rotated and shifted paraboloid.
+5
+3
+F1=COS(DTOR(A4))^2-4*(1/(4*A3))*SIN(DTOR(A4))*(Y-A1+(1/(4*A3))*SIN(DTOR(A4))*(X-A0)^2)
+F2=A2+(COS(DTOR(A4))-SQRT(F1))/2/(1/(4*A3))+(1/(4*A3))*COS(DTOR(A4))*((X-A0)^2+(CSC(DTOR(A4))^2*(COS(DTOR(A4))-SQRT(F1))^2/4/(1/(4*A3))^2))
+Z=F2
+-1E+25 0 1E+25
+-1E+25 0 1E+25
+-1E+25 0 1E+25
+0 108 1E+25
+0 0.05 0.5
