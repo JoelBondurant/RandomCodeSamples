@@ -90,17 +90,22 @@ public class WaferMeasurementEvent implements BaseEntity, Serializable, Comparab
         	return false;
         }
         WaferMeasurementEvent other = (WaferMeasurementEvent) obj;
-        return (this.hashCode() == other.hashCode());
+        return this.hashString().equals(other.hashString());
     }
-
-    @Override
-    public int hashCode() {
-		StringBuilder sb = new StringBuilder();
+    
+    private String hashString() {
+    	StringBuilder sb = new StringBuilder();
 		sb.append(this.toolChamber.getFactoryId()).append("_");
 		sb.append(this.wafer.getFactoryId()).append("_");
 		sb.append(this.adderOperation.getFactoryId()).append("_");
 		// sb.append(this.waferMeasurementMetric.); // include all fields.
-		return sb.toString().hashCode();
+		return sb.toString();
+    }
+    
+
+    @Override
+    public int hashCode() {
+		return hashString().hashCode();
     }
 
 

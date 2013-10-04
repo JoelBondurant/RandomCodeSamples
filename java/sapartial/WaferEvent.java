@@ -288,17 +288,21 @@ public class WaferEvent implements BaseEntity, Serializable, Comparable<WaferEve
         	return false;
         }
         WaferEvent other = (WaferEvent) obj;
-        return (this.hashCode() == other.hashCode());
+        return this.hashString().equals(other.hashCode());
     }
-
-    @Override
-    public int hashCode() {
-		StringBuilder sb = new StringBuilder();
+    
+    private String hashString() {
+    	StringBuilder sb = new StringBuilder();
 		sb.append(this.type.name()).append("_");
 		sb.append(this.product.getPDFId()).append("_");
 		sb.append(this.operation.getFactoryId()).append("_");
 		sb.append(this.wafer.getFactoryId());
-		return sb.toString().hashCode();
+		return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+		return hashString().hashCode();
     }
 
 	@Override

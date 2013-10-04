@@ -8,7 +8,7 @@ package com.sensoranalytics.inspectionmanager.fileimport;
  * @version 2011.1023
  * @since 1.0.0
  */
-public class XmlEventPipeline {
+public interface XmlEventPipeline {
 
 	public static final String PIPELINE_NAME = "EventXML";
 	public static final String FILENAME_REGEX = "^events\\d{8}T\\d{6}(\\(\\d+\\))?\\.xml$";
