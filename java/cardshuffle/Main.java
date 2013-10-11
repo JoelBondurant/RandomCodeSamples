@@ -1,4 +1,4 @@
-package com.cloudwords.cardshuffle;
+package com.analyticobjects.cardshuffle;
 
 /**
  * Card shuffler testing.
@@ -22,11 +22,11 @@ public class Main {
 		deck.collectionsShuffleSecRand(repeats);
 		timer.toc("collectionsShuffleSecRand");
 		timer.tic();
-		deck.joelShuffleVWhiteboard(repeats);
-		timer.toc("joelShuffleVWhiteboard");
+		deck.joelShuffleV1(repeats);
+		timer.toc("joelShuffleV1");
 		timer.tic();
-		deck.joelShuffleVHome(repeats);
-		timer.toc("joelShuffleVHome");
+		deck.joelShuffleV2(repeats);
+		timer.toc("joelShuffleV2");
 	}
 	
 	

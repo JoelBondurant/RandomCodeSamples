@@ -1,7 +1,7 @@
-package com.cloudwords.cardshuffle;
+package com.analyticobjects.cardshuffle;
 
-import com.cloudwords.cardshuffle.Card.Rank;
-import com.cloudwords.cardshuffle.Card.Suit;
+import com.analyticobjects.cardshuffle.Card.Rank;
+import com.analyticobjects.cardshuffle.Card.Suit;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,13 +61,13 @@ public class Deck {
 		Collections.shuffle(cards, srand);
 	}
 	
-	public void joelShuffleVWhiteboard(int repeats) {
+	public void joelShuffleV1(int repeats) {
 		for (int i = 0; i < repeats; i++) {
-			joelShuffleVWhiteboard();
+			joelShuffleV1();
 		}
 	}
 	
-	public void joelShuffleVWhiteboard() {
+	public void joelShuffleV1() {
 		int deckSize = cards.size();
 		List<CardSort> cardSorts = new ArrayList<>(deckSize);
 		for (int i = 0; i < deckSize; i++) {
@@ -84,13 +84,13 @@ public class Deck {
 		}
 	}
 	
-	public void joelShuffleVHome(int repeats) {
+	public void joelShuffleV2(int repeats) {
 		for (int i = 0; i < repeats; i++) {
-			joelShuffleVHome();
+			joelShuffleV2();
 		}
 	}
 	
-	public void joelShuffleVHome() {
+	public void joelShuffleV2() {
 		Card cardHolder;
 		Card randomCard;
 		int randInt;

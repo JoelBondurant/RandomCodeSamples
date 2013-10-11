@@ -1,4 +1,4 @@
-package com.cloudwords.binarytree;
+package com.analyticobjects.binarytree;
 
 import java.util.LinkedList;
 import java.util.Queue;

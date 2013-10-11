@@ -1,4 +1,4 @@
-package com.cloudwords.cardshuffle;
+package com.analyticobjects.cardshuffle;
 
 public class JTimer {
 	
