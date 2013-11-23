@@ -1,0 +1,29 @@
+#!/bin/bash
+# Title: Computer Configuration
+# Author: Joel Bondurant
+# OriginDate: 2013-11-22
+
+
+su
+# Yummy
+yum install gimp inkscape cheese tigervnc tigervnc-server samba
+yum install cinnamon vlc dropbox scala octave hdparm sdparm systat flash-plugin
+yum install wine mono wine-mono libgdiplus openjdk openjdk-devel R R-base python-pip python3
+yum install python3-pip python-virtualenv python-devel python3-devel 
+yum install terminator gcc iftop htop atop rpmdevtools yum-utils ncurses-devel
+yum install qt3-devel libXi-devel gcc-c++
+
+# Python
+python-pip install blas
+python-pip install numpy
+python-pip install distribute PyYAML
+python-pip install scipy matplotlib Twisted Pygame sympy freetype boto
+python-pip install pandas nose Markdown IPy ipython bokeh
+
+# Path Prep
+mkdir ~/Clients
+mkdir ~/Clients/AnalyticObjects
+mkdir ~/Workspace
+mkdir ~/Programs
+
+

@@ -1,0 +1,16 @@
+syntax on
+colorscheme koehler
+set number
+set nobackup
+set nowb
+set noswapfile
+set ai
+set si
+set incsearch
+set hlsearch
+set autoindent
+set showcmd
+set title
+set cursorline
+set cursorcolumn
+set nocompatible
