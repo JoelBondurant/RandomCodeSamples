@@ -288,7 +288,7 @@ public class WaferEvent implements BaseEntity, Serializable, Comparable<WaferEve
         	return false;
         }
         WaferEvent other = (WaferEvent) obj;
-        return this.hashString().equals(other.hashCode());
+        return this.hashString().equals(other.hashString());
     }
     
     private String hashString() {
