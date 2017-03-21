@@ -8,10 +8,10 @@ import six, six.moves # prime for google
 import httplib2, os, sys, io, time, datetime, itertools, random, argparse, json, csv
 import googleapiclient, googleapiclient.discovery, googleapiclient.http, googleapiclient.errors
 import oauth2client, oauth2client.file, oauth2client.client, oauth2client.tools
-from bssp.util import temporal
-from bssp.util import logger
-from bssp.util import crypto
-from bssp.util import files
+from aiobj.util import temporal
+from aiobj.util import logger
+from aiobj.util import crypto
+from aiobj.util import files
 
 
 ### Aiobj Creds:
@@ -45,7 +45,7 @@ BID_MANAGER_CREDS = './config/google_bidmanager_creds.dat'
 ### Start Google Auth ###
 
 def profileid():
-	"""Return BSSP main profile id."""
+	"""Return Aiobj main profile id."""
 	return PROFILE_ID
 
 def download_path():
