@@ -2,7 +2,7 @@
 import subprocess, getpass, argparse, os, sys
 
 CONTAINER_NAME = 'replaceme'
-
+container_name = CONTAINER_NAME.lower()
 
 # Start-up Helper functions:
 def src_paths(src_path = './src'):
