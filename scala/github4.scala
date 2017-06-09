@@ -1,26 +1,30 @@
 /**
-Spark solution to problem #4.
+ GitHub Problem 4 in Spark.
 **/
 
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.SparkSession
 
-val sqlc = new org.apache.spark.sql.SQLContext(sc)
 
-// Load data:
-val cols = Seq("ts","path","ref","cid")
-val fn = "page-views.csv"
-val pvs = sqlc.read.option("header","false").option("inferschema","true").csv(fn).toDF(cols: _*)
+def main() {
+	val ss = SparkSession.builder().getOrCreate()
 
-// Search counts:
-val searchCounts = pvs.filter("ref is null").groupBy("path").count()
+	// Load data:
+	val fileName = "page-views.csv"
+	val header = Seq("ts","path","ref","cid")
+	val pageViews = ss.read.option("header","false").option("inferschema","true").csv(fileName).toDF(header: _*)
 
-// Cheat with SparkSQL:
-searchCounts.registerTempTable("SearchCounts")
-val sqltxt = "select * from SearchCounts order by 2 desc, 1 asc limit 5"
-val topSearches = sqlc.sql(sqltxt).coalesce(1).collect()
+	// Search counts:
+	val searchCounts = pageViews.filter("ref is null").groupBy("path").count()
 
-// Print results:
-topSearches.foreach(println(_))
+	// Cheat with SparkSQL:
+	searchCounts.createOrReplaceTempView("SearchCounts")
+	val sqlTxt = "select * from SearchCounts order by 2 desc, 1 asc limit 5"
+	val topSearches = ss.sql(sqlTxt).coalesce(1).collect()
 
-System.exit(0)
+	// Print results and exit:
+	topSearches.foreach(println(_))
+	System.exit(0)
+}
 
+
+main()
