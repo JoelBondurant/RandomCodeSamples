@@ -20,7 +20,8 @@ def main() {
 	searchCounts.createOrReplaceTempView("SearchCounts")
 	val sqlTxt = "select * from SearchCounts order by 2 desc, 1 asc limit 5"
 	val topSearches = ss.sql(sqlTxt).coalesce(1).collect()
-
+	// May need an additional layer of sum & merge sort for huge datasets...
+	
 	// Print results and exit:
 	topSearches.foreach(println(_))
 	System.exit(0)
